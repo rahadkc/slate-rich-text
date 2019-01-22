@@ -1,0 +1,104 @@
+
+*{
+  box-sizing: border-box;
+}
+.App {
+  /* text-align: center; */
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+
+.editor{
+  /* padding: 0px 0px 20px; */
+  background: #fff;
+  max-width: 800px;
+  margin: 30px auto;
+  /* border: 1px solid #e2dddd; */
+  box-shadow: 0 0 3px #e2dddd;
+  border-radius: 6px;
+}
+.editor-field{
+  padding: 10px 20px 20px;
+}
+
+.format-toobar{
+  display: flex;
+  border-bottom: 1px solid #EFEFF0;
+  padding: 10px;
+  background: #8c8c8c;
+  border-radius: 6px 6px 0 0;
+}
+
+
+.tooltip-icon-button{
+  padding: 5px 10px 0px;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  cursor: pointer;
+  color: #fff;
+}
+.disabled{
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+.tooltip-icon-button:hover{
+  background: #808080;
+}
+.editor-tools{
+  border-top: 1px solid #efefef;
+  display: flex;
+  justify-content: space-around;
+}
+.imgBtn{
+  position: relative;
+  overflow: hidden;
+}
+.imgBtn input[type="file"]{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  opacity:0;
+}
+input[type="number"]{
+  padding: 10px;
+  height: 34px;
+}
+
+/* Format styles */
+blockquote {
+  border-left: 2px solid #ddd;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 10px;
+  color: #aaa;
+  font-style: italic;
+}
+code{
+  background-color: #e6e6e6;
+  padding: 3px;
+}
