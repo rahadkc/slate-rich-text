@@ -4,8 +4,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### Demo
-This project Demo [Demo](https://rahadkc.github.io/slate-rich-text/)
 
 ### `npm start`
 
