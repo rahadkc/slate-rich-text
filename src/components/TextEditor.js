@@ -34,6 +34,8 @@ const Button = styled.button`
   display: inline-block;
   padding: 9px;
   margin: 0 5px;
+  pointer-events: ${props => props.disabled ? 'none' : 'inherit'};
+  opacity: ${props => props.disabled ? 0.4 : 1};
 
   :hover {
     opacity: 0.7;
@@ -127,7 +129,7 @@ class TextEditor extends React.Component {
             onChange={this.handleChange}
           />
           <div className="">
-            <Button primary onClick={() => this.handleSaveContent('save')}>Save</Button>
+            <Button primary onClick={() => this.handleSaveContent('save')} disabled={this.blockCount > this.state.blockLimit}>Save</Button>
             <Button onClick={() => this.handleSaveContent('cancel')}>Cancel</Button>
           </div>
         </FormatToolbar>
