@@ -303,14 +303,16 @@ class TextEditor extends React.Component {
     const block = value.blocks.first();
     const parent = block ? document.getParent(block.key) : null;
     const type = !parent.type ? 'bulleted-list' : parent.type;
+    const depth = document.getDepth(block.key);
+
+    console.log(block.text, 'depth', editor.nodes, 'parent', parent.getBlocks(block.key).isEmpty())
 
     if (!event.shiftKey && event.key === 'Tab') {
       event.preventDefault();
-      const depth = document.getDepth(block.key);
 
       if (depth > 3){
         return next();
-      };
+      } 
       if (parent) {
         editor.setBlocks('list-item').wrapBlock(type);
       }
@@ -319,6 +321,13 @@ class TextEditor extends React.Component {
     if (event.shiftKey && event.key === 'Tab') {
       event.preventDefault();
       editor.setBlocks('list-item').unwrapBlock(type)
+    }
+
+    if (event.key === 'Enter' &&  !block.text.length) {
+      editor
+      .setBlocks(DEFAULT_NODE)
+      .unwrapBlock('bulleted-list')
+      .unwrapBlock('numbered-list');
     }
   }
 
@@ -367,6 +376,7 @@ class TextEditor extends React.Component {
     if (type !== "bulleted-list" && type !== "numbered-list") {
       const isActive = this.hasBlock(type);
       const isList = this.hasBlock("list-item");
+
 
       if (isList) {
         editor
