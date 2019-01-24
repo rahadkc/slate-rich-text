@@ -275,6 +275,10 @@ class TextEditor extends React.Component {
   handleUploadImage(e) {
     const reader = new FileReader();
     const file = e.target.files[0];
+    if (this.blockCount > this.state.blockLimit) {
+      alert('Block limit exceeded');
+      return;
+    };
     reader.addEventListener('load', () => 
       this.setState({ src: reader.result }, () => {
         this.editor.command(this.insertImage, this.state.src);
@@ -304,10 +308,11 @@ class TextEditor extends React.Component {
     const parent = block ? document.getParent(block.key) : null;
     const type = !parent.type ? 'bulleted-list' : parent.type;
     const depth = document.getDepth(block.key);
+    const isList = this.hasBlock('list-item');
 
-    console.log(block.text, 'depth', editor.nodes, 'parent', parent.getBlocks(block.key).isEmpty())
+    // console.log(block.text, 'depth', editor.nodes, 'parent', parent.getBlocks(block.key).isEmpty())
 
-    if (!event.shiftKey && event.key === 'Tab') {
+    if (!event.shiftKey && event.key === 'Tab' && isList) {
       event.preventDefault();
 
       if (depth > 3){
@@ -318,16 +323,19 @@ class TextEditor extends React.Component {
       }
     }
 
-    if (event.shiftKey && event.key === 'Tab') {
+    if (event.shiftKey && event.key === 'Tab' && isList) {
+      if (depth < 3 ) {
+        return next();
+      }
       event.preventDefault();
       editor.setBlocks('list-item').unwrapBlock(type)
     }
 
     if (event.key === 'Enter' &&  !block.text.length) {
       editor
-      .setBlocks(DEFAULT_NODE)
       .unwrapBlock('bulleted-list')
-      .unwrapBlock('numbered-list');
+      .unwrapBlock('numbered-list')
+      .setBlocks(DEFAULT_NODE)
     }
   }
 
