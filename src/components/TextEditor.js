@@ -297,7 +297,35 @@ class TextEditor extends React.Component {
     this.setState({ value });
   };
 
+  handleTabList = (event, editor, next) => {
+    const { value } = editor;
+    const { document } = value;
+    const block = value.blocks.first();
+    const parent = block ? document.getParent(block.key) : null;
+    const type = !parent.type ? 'bulleted-list' : parent.type;
+
+    if (!event.shiftKey && event.key === 'Tab') {
+      event.preventDefault();
+      const depth = document.getDepth(block.key);
+
+      if (depth > 3){
+        return next();
+      };
+      if (parent) {
+        editor.setBlocks('list-item').wrapBlock(type);
+      }
+    }
+
+    if (event.shiftKey && event.key === 'Tab') {
+      event.preventDefault();
+      editor.setBlocks('list-item').unwrapBlock(type)
+    }
+  }
+
   onKeyDown = (event, editor, next) => {
+    
+    this.handleTabList(event, editor, next);
+
     if(this.blockCount > this.state.blockLimit && event.key !== 'Backspace') {
       event.preventDefault();
       return ;
