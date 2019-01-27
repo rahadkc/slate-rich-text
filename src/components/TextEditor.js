@@ -279,12 +279,16 @@ class TextEditor extends React.Component {
       alert('Block limit exceeded');
       return;
     };
-    reader.addEventListener('load', () => 
-      this.setState({ src: reader.result }, () => {
-        this.editor.command(this.insertImage, this.state.src);
-      })
-    )
-    reader.readAsDataURL(file)
+    if (/\.(jpe?g|png|gif)$/i.test(file.name) ) {
+      reader.addEventListener('load', () => 
+        this.setState({ src: reader.result }, () => {
+          this.editor.command(this.insertImage, this.state.src);
+        })
+      )
+      reader.readAsDataURL(file)
+    } else {
+      alert('Sorry Invalie Image format');
+    }
   }
 
   insertImage = (editor, src, target) => {
@@ -345,6 +349,7 @@ class TextEditor extends React.Component {
 
     if(this.blockCount > this.state.blockLimit && event.key !== 'Backspace') {
       event.preventDefault();
+      alert('Block limit exceeded');
       return ;
     }
      
